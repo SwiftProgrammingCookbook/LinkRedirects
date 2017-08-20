@@ -5,8 +5,13 @@ let redirects = ["docs": ["the-basics"  : "https://developer.apple.com/library/i
                           "int"         : "https://developer.apple.com/documentation/swift/int",
                           "float"       : "https://developer.apple.com/documentation/swift/float",
                           "bool"        : "https://developer.apple.com/documentation/swift/bool",
-                          "string"      : "https://developer.apple.com/documentation/swift/string"],
-                 "code": ["swift-building-blocks": "https://github.com/SwiftProgrammingCookbook/SwiftBuildingBlocks"]]
+                          "string"      : "https://developer.apple.com/documentation/swift/string",
+                          "view-controller-lifecycle" : "https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html#//apple_ref/doc/uid/TP40015214-CH6-SW3"],
+                 "code": ["chapter1" : "https://github.com/SwiftProgrammingCookbook/SwiftBuildingBlocks",
+                          "chapter2" : "https://github.com/SwiftProgrammingCookbook/BuildingOnTheBuildingBlocks",
+                          "chapter3" : "https://github.com/SwiftProgrammingCookbook/DataWranglingWithSwiftControlFlow",
+                          "chapter4" : "https://github.com/SwiftProgrammingCookbook/GenericsOperatorsAndNestedTypes",
+                          "chapter5" : "https://github.com/SwiftProgrammingCookbook/BeyondTheStandardLibrary"]]
 
 extension Droplet {
     
