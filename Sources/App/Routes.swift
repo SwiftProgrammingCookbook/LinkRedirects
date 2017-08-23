@@ -19,7 +19,8 @@ let redirects = ["docs": ["the-basics"  : "https://developer.apple.com/library/i
                           "chapter3" : "https://github.com/SwiftProgrammingCookbook/DataWranglingWithSwiftControlFlow",
                           "chapter4" : "https://github.com/SwiftProgrammingCookbook/GenericsOperatorsAndNestedTypes",
                           "chapter5" : "https://github.com/SwiftProgrammingCookbook/BeyondTheStandardLibrary",
-                          "chapter6" : "https://github.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples"]]
+                          "chapter6" : "https://github.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples"],
+                 "resources": ["texture.png" : "https://raw.githubusercontent.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples/master/EmbeddedResource.playground/Resources/texture.png"]]
 
 extension Droplet {
     
