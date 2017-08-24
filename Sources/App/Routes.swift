@@ -20,7 +20,10 @@ let redirects = ["docs": ["the-basics"  : "https://developer.apple.com/library/i
                           "chapter4" : "https://github.com/SwiftProgrammingCookbook/GenericsOperatorsAndNestedTypes",
                           "chapter5" : "https://github.com/SwiftProgrammingCookbook/BeyondTheStandardLibrary",
                           "chapter6" : "https://github.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples"],
-                 "resources": ["texture.png" : "https://raw.githubusercontent.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples/master/EmbeddedResource.playground/Resources/texture.png"]]
+                 "resources": ["texture.png" : "https://raw.githubusercontent.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples/master/EmbeddedResource.playground/Resources/texture.png"],
+                 "videos": ["cryptocurrencies" : "https://youtu.be/W-Xbf8OH_Fw"],
+                 "markdown": ["docs" : "https://daringfireball.net/projects/markdown/syntax",
+                              "cheatsheet" : "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"]]
 
 extension Droplet {
     
