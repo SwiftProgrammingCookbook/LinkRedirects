@@ -50,15 +50,27 @@ extension Droplet {
                 throw Abort.serverError
             }
             
+            var numberOfPasses = 0
+            var numberOfFailures = 0
             var testResults: [[String: String]] = []
 
             for (path, urlString) in pathAndURLStrings {
 
                 let status: String = {
+                    
+                    let testRequest = Request(method: .get, uri: urlString)
                    
-                    if let response = try? strongSelf.client.get(urlString) {
+                    if let response = try? strongSelf.client.respond(to: testRequest) {
+                        
+                        if response.status == .ok {
+                            numberOfPasses += 1
+                        } else {
+                            numberOfFailures += 1
+                        }
+                        
                         return "\(response.status.statusCode) \(response.status.reasonPhrase)"
                     } else {
+                        numberOfFailures += 1
                         return "request failed"
                     }
                 }()
@@ -66,8 +78,10 @@ extension Droplet {
                 let result = ["path": path, "url": urlString, "status": status]
                 testResults.append(result)
             }
+            
+            let response: [String: Any] = ["overview": "Passed: \(numberOfPasses) | Failed: \(numberOfFailures)", "testResults": testResults]
 
-            let node = try testResults.makeNode(in: nil)
+            let node = try response.makeNode(in: nil)
             return JSON(node)
         }
     }
