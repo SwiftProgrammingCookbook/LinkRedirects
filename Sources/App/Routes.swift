@@ -1,7 +1,7 @@
 import Vapor
 
-let redirects = ["docs": ["the-basics"  : "https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html",
-                          "strings"     : "https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html",
+let redirects = ["docs": ["the-basics"  : "https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html",
+                          "strings"     : "https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html",
                           "int"         : "https://developer.apple.com/documentation/swift/int",
                           "float"       : "https://developer.apple.com/documentation/swift/float",
                           "bool"        : "https://developer.apple.com/documentation/swift/bool",
@@ -9,11 +9,11 @@ let redirects = ["docs": ["the-basics"  : "https://developer.apple.com/library/i
                           "vc-lifecycle"        : "https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/WorkWithViewControllers.html#//apple_ref/doc/uid/TP40015214-CH6-SW3",
                           "uitableviewdelegate﻿" : "https://developer.apple.com/documentation/uikit/uitableviewdelegate",
                           "vc-guide"            : "https://developer.apple.com/library/content/featuredarticles/ViewControllerPGforiPhoneOS/index.html#//apple_ref/doc/uid/TP40007457",
-                          "xmlparser"           : "https://developer.apple.com/reference/foundation/xmlparser",
+                          "xmlparser"           : "https://developer.apple.com/documentation/foundation/xmlparser",
                           "foundation" : "https://developer.apple.com/documentation/foundation",
                           "networking" : "https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/Introduction/Introduction.html",
                           "urlsession-guide" : "https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/URLLoadingSystem.html#//apple_ref/doc/uid/10000165i",
-                          "playgroundsupport" : "https://developer.apple.com/reference/playgroundsupport"],
+                          "playgroundsupport" : "https://developer.apple.com/documentation/playgroundsupport"],
                  "code": ["chapter1" : "https://github.com/SwiftProgrammingCookbook/SwiftBuildingBlocks",
                           "chapter2" : "https://github.com/SwiftProgrammingCookbook/BuildingOnTheBuildingBlocks",
                           "chapter3" : "https://github.com/SwiftProgrammingCookbook/DataWranglingWithSwiftControlFlow",
@@ -21,7 +21,7 @@ let redirects = ["docs": ["the-basics"  : "https://developer.apple.com/library/i
                           "chapter5" : "https://github.com/SwiftProgrammingCookbook/BeyondTheStandardLibrary",
                           "chapter6" : "https://github.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples"],
                  "resources": ["texture.png" : "https://raw.githubusercontent.com/SwiftProgrammingCookbook/SwiftPlaygroundExamples/master/EmbeddedResource.playground/Resources/texture.png"],
-                 "videos": ["cryptocurrencies" : "https://youtu.be/W-Xbf8OH_Fw"],
+                 "videos": ["cryptocurrencies" : "https://www.youtube.com/watch?v=W-Xbf8OH_Fw&feature=youtu.be"],
                  "markdown": ["docs" : "https://daringfireball.net/projects/markdown/syntax",
                               "cheatsheet" : "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"]]
 
@@ -44,18 +44,31 @@ extension Droplet {
         
         // Test endpoint
         
-//        get("test-links") { req in
-//
-//            var testResults = [[String: String]] = []
-//
-//            for (path, urlString) in pathAndURLStrings {
-//
-//                let response = client.head(urlString)
-//                let result = ["path": path, "url": urlString, "status": "200 OK"]
-//                testResults.append(result)
-//            }
-//
-//            return JSON(testResults)
-//        }
+        get("test-links") { [weak self] req in
+
+            guard let strongSelf = self else {
+                throw Abort.serverError
+            }
+            
+            var testResults: [[String: String]] = []
+
+            for (path, urlString) in pathAndURLStrings {
+
+                let status: String = {
+                   
+                    if let response = try? strongSelf.client.get(urlString) {
+                        return "\(response.status.statusCode) \(response.status.reasonPhrase)"
+                    } else {
+                        return "request failed"
+                    }
+                }()
+                
+                let result = ["path": path, "url": urlString, "status": status]
+                testResults.append(result)
+            }
+
+            let node = try testResults.makeNode(in: nil)
+            return JSON(node)
+        }
     }
 }
