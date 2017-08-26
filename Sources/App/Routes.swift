@@ -29,6 +29,8 @@ extension Droplet {
     
     func setupRoutes() throws {
         
+        var pathAndURLStrings = [String: String]()
+        
         for (path1, value) in redirects {
             
             for (path2, urlString) in value {
@@ -36,7 +38,24 @@ extension Droplet {
                 get(path1, path2) { req in
                     return Response(redirect: urlString)
                 }
+                pathAndURLStrings["\(path1)/\(path2)"] = urlString
             }
         }
+        
+        // Test endpoint
+        
+//        get("test-links") { req in
+//
+//            var testResults = [[String: String]] = []
+//
+//            for (path, urlString) in pathAndURLStrings {
+//
+//                let response = client.head(urlString)
+//                let result = ["path": path, "url": urlString, "status": "200 OK"]
+//                testResults.append(result)
+//            }
+//
+//            return JSON(testResults)
+//        }
     }
 }
