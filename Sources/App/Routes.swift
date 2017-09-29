@@ -86,6 +86,10 @@ extension Droplet {
             return Response(redirect: "https://www.amazon.com/Swift-Programming-Cookbook-Keith-Moon/dp/1786460890/ref=sr_1_1?ie=UTF8&qid=1506664326&sr=8-1")
         }
         
+        get("de") { request in
+            return Response(redirect: "https://www.amazon.de/Swift-Programming-Cookbook-Keith-Moon/dp/1786460890/ref=sr_1_1?ie=UTF8&qid=1506720600&sr=8-1")
+        }
+        
         // Test endpoint
         
         get("test-links") { [weak self] req in
